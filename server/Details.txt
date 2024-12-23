@@ -1,0 +1,118 @@
+Models:
+
+1. User Model
+- firstName -> String
+- lastName -> String
+- email -> String
+- password -> String
+- confirmPassword -> String
+- accountType -> String
+- additionalDetail -> ObjectId (ref = "Profile Model")
+- course -> ObjectId (ref = "Courses Model")
+- image -> Image
+- courseProgress -> ObjectId (ref = "CourseProgress Model")
+
+2. Profile Model
+- gender -> String
+- dob -> String
+- about -> String
+- phoneNo -> String
+
+3. CourseProgress Model
+- courseId -> ObjectId (ref = "Course Model")
+- completedVideo -> ObjectId (ref = "SubSection Model")
+
+4. SubSection Model
+- title -> String
+- timeDuration -> String
+- description -> String
+- videoUrl -> String
+
+5. Course Model
+- name -> String
+- description -> String
+- instructor -> ObjectId (ref = "User Model")
+- whatYouLearn -> String
+- courseContent -> [ObjectId (ref = "SubSection Model")]
+- ratingAndReviews -> [ObjectId (ref = "RatingAndReviews Model")]
+- price -> Number
+- thumbnails -> String
+- tags -> ObjectId (ref = "Tags Model")
+- studentEnrolled -> Number
+
+6. Section Model
+- sectionName -> String
+- subSection -> [ObjectId (ref = "SubSection Model")]
+
+7. RatingAndReviews Model
+- user -> ObjectId (ref = "User Model")
+- rating -> Number
+- reviews -> String
+
+8. Tags Model
+- name -> String
+- description -> String
+- course -> ObjectId (ref = "Course Model")
+
+9. OTP Model
+- email -> String
+- createdAt -> Date
+- otp -> Number
+
+Controllers:
+
+1. Auth.js
+- sendOtp
+- signUp
+- login
+- changePassword
+- resetPassword
+
+2. Category.js
+- createCategory
+- getAllCategory
+- categoryPageDetails
+
+3. Course.js
+- createCourse
+- getAllCourse
+- getCourseDetails
+
+4. Payment.js
+- capturePayment
+- verifySignature
+
+5. Profile.js
+- updateProfile
+- getUserDetails
+- deleteAccount
+
+6. RatingAndReviews.js
+- createRating
+- getAverageRating
+- getAllRatingAndReviews
+
+7. ResetPassword.js
+- resetPasswordToken
+- resetPassword
+
+8. Section.js
+- createSection
+- updateSection
+- deleteSection
+
+9. SubSection.js
+- createSubSection
+- updateSubSection
+
+Middlewares:
+
+1. auth
+2. isStudent
+3. isInstructor
+4. isAdmin
+
+Utilities:
+
+1. mailSender
+2.imageUploader
