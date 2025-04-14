@@ -5,6 +5,8 @@ import { useDispatch} from "react-redux";
 import { setSingupData } from "../redux/slices/authSlice";
 import { sendOTP } from "../service/operations/authAPI";
 import { useNavigate } from "react-router-dom";
+import InputField from "../Components/InputField";
+import toast from "react-hot-toast";
 
 
 const SignUp = () => {
@@ -42,6 +44,10 @@ const SignUp = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    if (password !== confirmPassword) {
+      toast.error("Passwords Does Not Match")
+      return
+    }
     dispatch(setSingupData(formData));
     dispatch(sendOTP(email , navigate))
   };
@@ -56,12 +62,12 @@ const SignUp = () => {
   };
 
   return (
-    <div className="text-gray-500 font-bold px-28 pt-16 flex justify-between bg-richblack-900">
-      <div className="w-[36%] flex flex-col gap-3 overflow-hidden">
-        <p className="text-white text-3xl">
+    <div className="text-gray-500 font-bold px-3 pb-10 md:px-18 lg:px-28 pt-16 flex gap-20 justify-between bg-richblack-900">
+      <div className=" flex flex-col gap-3 overflow-hidden px-10">
+        <p className="text-white text-lg sm:text-2xl md:text-3xl">
           Join the millions learning to code with StudyNotion for free
         </p>
-        <p>
+        <p className="text-xs md:text-base">
           Build skills for today, tomorrow, and beyond. Education to
           future-proof your career.
         </p>
@@ -88,88 +94,16 @@ const SignUp = () => {
           </span>
         </div>
         <form className="flex flex-col gap-3" onSubmit={handleOnSubmit}>
-          <div className=" flex gap-3">
-            <div className="flex flex-col gap-2">
-              <label className="text-sm">
-                First Name <span className="text-red-700">*</span>
-              </label>
-              <input
-                type="text"
-                className=" bg-richblack-800 p-2 border-transparent rounded-lg"
-                placeholder="Enter first name"
-                name="firstName"
-                value={firstName}
-                onChange={handleOnChange}
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="text-sm">
-                Last Name <span className="text-red-700">*</span>
-              </label>
-              <input
-                type="text"
-                className=" bg-richblack-800 p-2 border-transparent rounded-lg"
-                placeholder="Enter last name"
-                name="lastName"
-                value={lastName}
-                onChange={handleOnChange}
-              />
-            </div>
+          <div className=" flex flex-col gap-3 sm:flex-row">
+          <InputField label={"First Name"} type={"text"} placeholder={"Enter first name"} value={firstName} changeFunc={handleOnChange} name={"firstName"}/>
+          <InputField label={"Last Name"} type={"text"} placeholder={"Enter last name"} value={lastName} changeFunc={handleOnChange} name={"lastName"}/>
           </div>
-          <div className="flex flex-col gap-2">
-            <label className="text-sm">
-              Email Address <span className="text-red-700">*</span>
-            </label>
-            <input
-              type="email"
-              className="bg-richblack-800 w-full p-2 border-transparent rounded-lg"
-              placeholder="Enter email"
-              name="email"
-              value={email}
-              onChange={handleOnChange}
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label className="text-sm ">
-              Phone no <span className="text-red-700">*</span>
-            </label>
-            <input
-              type="number"
-              className="bg-richblack-800 p-2 w-full border-transparent rounded-lg"
-              placeholder="Enter phone no"
-              name="phone"
-              // value={phone}
-              // onChange={handleOnChange}
-            />
-          </div>
-          <div className="flex gap-3">
-            <div className="flex flex-col w-fit gap-2">
-              <label className="text-sm">
-                Create password <span className="text-red-700">*</span>
-              </label>
-              <input
-                type="password"
-                className=" bg-richblack-800 p-2 border-transparent rounded-lg"
-                placeholder="Enter password"
-                name="password"
-                value={password}
-                onChange={handleOnChange}
-              />
-            </div>
-            <div className="flex flex-col w-fit gap-2">
-              <label className="text-sm">
-                confirm password <span className="text-red-700">*</span>
-              </label>
-              <input
-                type="password"
-                className=" bg-richblack-800 p-2 border-transparent rounded-lg"
-                placeholder="Confirm password"
-                name="confirmPassword"
-                value={confirmPassword}
-                onChange={handleOnChange}
-              />
-            </div>
-          </div>
+          <InputField label={"Email Address"} type={"email"} placeholder={"Enter email "} value={email} changeFunc={handleOnChange} name={"email"}/>
+          <InputField label={"Phone no"} type={"number"} placeholder={"Enter contact no "}  name={"contact"}/>
+          <div className="flex gap-3 flex-col sm:flex-row ">
+          <InputField label={"Create Password"} type={"password"} placeholder={"Enter password "} value={password} changeFunc={handleOnChange} name={"password"}/>
+          <InputField label={"Confirm Password"} type={"password"} placeholder={"Enter password again "} value={confirmPassword} changeFunc={handleOnChange} name={"confirmPassword"}/>
+          </div> 
           <div className="flex w-full px-2 mt-1">
             <button className="text-black w-full bg-yellow-50 px-5 py-3 border-transparent rounded-xl">
               Create Acount
@@ -177,7 +111,7 @@ const SignUp = () => {
           </div>
         </form>
       </div>
-      <div className="relative mt-16">
+      <div className="relative mt-16 hidden xl:block ">
         <img src={Frame} alt="" />
         <img src={Signup} alt="" className="absolute right-4 -top-4" />
       </div>

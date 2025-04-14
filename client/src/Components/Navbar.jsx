@@ -44,7 +44,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="text-[#DBDDEA] flex justify-between items-center px-20 py-3 border-b-[1px] border-richblack-700 bg-richblack-800 max-md:px-2">
+    <div className=" text-[#DBDDEA] flex justify-between items-center px-20 py-3 border-b-[1px] border-richblack-700 bg-richblack-800 max-md:px-2">
       <div>
         <Link to={"/"}>
           <img src={logo} alt="" className="max-sm:scale-90" />
@@ -96,8 +96,8 @@ const Navbar = () => {
         })}
       </div>
       <div className="flex gap-4 items-center">
-        <IoSearchOutline className="scale-125" />
-        <IoCartOutline className="scale-125" />
+        <IoSearchOutline className="scale-125 hidden" />
+        <IoCartOutline className="scale-125 hidden" />
 
         {expiryTime > Date.now() ? ()=>{dispatch(setToken)} : ""}
 

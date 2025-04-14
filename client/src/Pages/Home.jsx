@@ -13,7 +13,6 @@ import CardSection from "../Components/core/Home/CardSection";
 import Footer from "../Components/Footer";
 import { getAllRatingReview } from "../service/operations/courseAPI";
 import Reviewswiper from "../Components/CourseDetails/Reviewswiper";
-
 export const Home = () => {
   const [allReview, setAllReview] = useState([]);
 
@@ -22,14 +21,16 @@ export const Home = () => {
       const result = await getAllRatingReview();
       console.log(result);
       setAllReview(result.data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   };
   useEffect(() => {
     getAllReviews();
   }, []);
 
   return (
-    <div>
+    <>
       {/* Section - 1 */}
       <div className="Section-1 bg-richblack-900 text-[#999DAA] h-fit">
         <div className="flex justify-center flex-col items-center">
@@ -153,6 +154,6 @@ export const Home = () => {
         </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 };

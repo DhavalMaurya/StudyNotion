@@ -33,13 +33,13 @@ exports.sendOTP = async (req, res) => {
 
         //Check otp is unique or not
         const result = await Otp.findOne({ otp: otp });
+        
         while (result) {
             var otp = otpGenerator.generate(6, {
                 upperCaseAlphabets: false,
                 lowerCaseAlphabets: false,
                 specialChars: false
             });
-            console.log(otp);
             result = await Otp.findOne({ otp: otp });
         }
 
@@ -47,7 +47,11 @@ exports.sendOTP = async (req, res) => {
         const title = "Your OTP Code for StudyNotion"
         const otpPayload = { email, title, otp };
         const otpBody = await Otp.create(otpPayload);
-        console.log(otpBody);
+        console.log("Otp body ha idhar" , otpBody);
+
+        if(!otpBody){
+            return res.status(400).json({ success: false, message: "Failed to send OTP"});
+        }
 
         //return response
         res.status(200).json({ success: true, message: "OTP sent successfully", otpBody })
@@ -76,8 +80,9 @@ exports.singUp = async (req, res) => {
 
         //check if user already exist 
         const userExist = await User.findOne({ email });
+
         if (userExist) {
-            return res.status(400).json({ success: false, message: "User already registered" });
+            return res.status(409).json({ success: false, message: "User already registered" });
         }
 
         //find most recent otp
@@ -86,7 +91,7 @@ exports.singUp = async (req, res) => {
         console.log("OTP : ", otp);
 
         //validate otp
-        if (recentOtp.length == 0) {
+        if (!recentOtp){
             return res.status(400).json({ success: false, message: "OTP not found" });
         }
         else if (otp !== recentOtp.otp) {
@@ -145,14 +150,14 @@ exports.login = async (req, res) => {
             //generate JWT token
             const playload = { email: email, id: userExist._id, accountType: userExist.accountType, }
             const token = jwt.sign(playload, process.env.JWT_SECRET, {
-                expiresIn: "20h",
+                expiresIn: "30h",
             })
             userExist.token = token;
             userExist.password = undefined;
 
             //generate cookie
             const options = {
-                expires: new Date(Date.now() + 3 * 34 * 60 * 1000),
+                expires: new Date(Date.now() + 30 * 34 * 60 * 1000),
                 httpOnly: true,
             }
             res.cookie("token", token, options).status(200).json({
@@ -160,7 +165,7 @@ exports.login = async (req, res) => {
                 token,
                 userExist,
                 message: 'Logged in successfully',
-            })
+            })  
         }
         else {
             return res.status(401).json({ success: false, message: "Invalid credentials" });

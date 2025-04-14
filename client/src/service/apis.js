@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api/v1"
+const BASE_URL = "https://rvmxphn7-5000.inc1.devtunnels.ms/api/v1"
 
 export const categories = {
     CATEGORIES_API : BASE_URL + "/course/getAllCategory"
@@ -29,7 +29,6 @@ export const courseEndpoints = {
     CREATE_RATING_API : BASE_URL + "/course/courseRating",
     GET_AVERAGE_RATING_API : BASE_URL + "/course/getAverageRating",
     GET_ALL_RATING_AND_REVIEW_API : BASE_URL  + "/course/getAllReview"
-
 }
 
 // export const studentEndpoints = {

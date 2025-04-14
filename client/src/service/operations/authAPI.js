@@ -17,6 +17,7 @@ export const logIn = (email, password, navigate) => {
             })
             console.log("Login response .... ", response)
             if (!response.data.success) {
+                toast.error(response.data.message)
                 throw new Error(response.data.message)
             }
 
@@ -30,7 +31,7 @@ export const logIn = (email, password, navigate) => {
             navigate("/dashboard/my-profile")
         } catch (error) {
             console.log("LOGIN API ERROR............", error)
-            toast.error("Login Failed")
+            toast.error(error.response.data.message)
         }
 
         dispatch(setLoading(false))
@@ -48,7 +49,8 @@ export const sendOTP = (email, navigate) => {
             console.log(response.data)
 
             if (!response.data.success) {
-                throw new Error(response.data.message)
+               toast.error(response.data.message);
+               throw new Error(response.data.error)
             }
 
             toast.success("OTP sent successfully");
